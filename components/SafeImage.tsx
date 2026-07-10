@@ -7,7 +7,7 @@ const PLACEHOLDER =
 
 type SafeImageProps = React.ImgHTMLAttributes<HTMLImageElement>;
 
-export default function SafeImage({ src, alt, style, ...props }: SafeImageProps) {
+export default function SafeImage({ src, alt, style, loading, ...props }: SafeImageProps) {
   const [imgSrc, setImgSrc] = useState(src);
 
   useEffect(() => {
@@ -19,6 +19,8 @@ export default function SafeImage({ src, alt, style, ...props }: SafeImageProps)
       {...props}
       src={imgSrc}
       alt={alt ?? ""}
+      loading={loading ?? "lazy"}
+      decoding="async"
       style={style}
       onError={() => setImgSrc(PLACEHOLDER)}
     />
