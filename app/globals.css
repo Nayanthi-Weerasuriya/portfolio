@@ -279,6 +279,7 @@ header {
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 2rem;
+    align-items: center;
 }
 
 .hero-cta .btn-primary {
@@ -1056,6 +1057,7 @@ footer {
     border-radius: 8px;
     color: var(--text-main);
     font-family: var(--font-main);
+    font-size: 1rem; /* Prevents iOS auto-zoom (must be ≥16px equivalent) */
     transition: var(--transition);
     width: 100%;
     box-sizing: border-box;
@@ -1214,11 +1216,17 @@ footer {
     cursor: pointer;
     padding: 0;
     z-index: 1100;
+    /* Ensure touch target is at least 44x44px */
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
 }
 
 .hamburger span {
     display: block;
-    width: 100%;
+    width: 24px;
     height: 2px;
     background-color: var(--text-main);
     border-radius: 2px;
@@ -1228,14 +1236,14 @@ footer {
 
 /* Animate to X when open */
 .hamburger.open span:nth-child(1) {
-    transform: translateY(9px) rotate(45deg);
+    transform: translateY(7px) rotate(45deg);
 }
 .hamburger.open span:nth-child(2) {
     opacity: 0;
     transform: scaleX(0);
 }
 .hamburger.open span:nth-child(3) {
-    transform: translateY(-9px) rotate(-45deg);
+    transform: translateY(-7px) rotate(-45deg);
 }
 
 /* ==========================================
@@ -1243,16 +1251,28 @@ footer {
    ========================================== */
 @media (max-width: 992px) {
 
-    /* Hero: stack vertically */
-    #hero {
+    /* Hero: stack image on top, text on bottom */
+    .hero-inner {
         flex-direction: column-reverse;
         text-align: center;
-        padding-top: 120px;
-        gap: 2rem;
+        gap: 2.5rem;
+    }
+
+    .hero-cta {
+        justify-content: center;
+    }
+
+    .hero-stats {
+        justify-content: center;
     }
 
     .hero-summary {
         margin: 0 auto 2.5rem;
+    }
+
+    .availability-badge {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .social-links {
@@ -1275,8 +1295,16 @@ footer {
         text-align: center;
     }
 
+    /* TryHackMe card: stack vertically */
+    .thm-stats-card {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+        max-width: 100%;
+    }
+
     /* Certs grid: 2 columns on tablet */
-    .certs-grid {
+    .cert-grid {
         grid-template-columns: repeat(2, 1fr);
     }
 
@@ -1294,6 +1322,11 @@ footer {
     .contact-wrapper {
         grid-template-columns: 1fr;
         gap: 2.5rem;
+    }
+
+    /* Hide the nav CTA button on smaller screens to save space */
+    .nav-cta {
+        display: none;
     }
 }
 
@@ -1316,16 +1349,18 @@ footer {
         position: fixed;
         top: 0;
         right: -100%;
-        width: 75%;
-        max-width: 300px;
+        width: 78%;
+        max-width: 320px;
         height: 100vh;
-        background-color: rgba(15, 23, 42, 0.98);
-        backdrop-filter: blur(12px);
+        background-color: rgba(11, 17, 32, 0.98);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
         border-left: 1px solid var(--border-color);
-        padding: 100px 2rem 2rem;
+        padding: 90px 1.5rem 2rem;
         transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        z-index: 1000;
-        box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+        z-index: 1050;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.6);
+        overflow-y: auto;
     }
 
     .nav-links.open {
@@ -1334,7 +1369,7 @@ footer {
 
     .nav-links li {
         width: 100%;
-        border-bottom: 1px solid var(--border-color);
+        border-bottom: 1px solid rgba(51, 65, 85, 0.5);
     }
 
     .nav-links li:last-child {
@@ -1343,11 +1378,15 @@ footer {
 
     .nav-links a {
         display: block;
-        padding: 1.1rem 0;
-        font-size: 1.1rem;
+        padding: 1rem 0;
+        font-size: 1.05rem;
         color: var(--text-main);
         text-align: center;
-        letter-spacing: 1px;
+        letter-spacing: 0.5px;
+        min-height: 44px; /* touch target */
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .nav-links a::after {
@@ -1359,20 +1398,32 @@ footer {
         display: none;
         position: fixed;
         inset: 0;
-        background: rgba(0,0,0,0.5);
-        z-index: 999;
-        transition: opacity 0.3s ease;
+        background: rgba(0,0,0,0.6);
+        z-index: 1049;
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
     }
 
     .nav-overlay.open {
         display: block;
     }
 
+    /* Nav container height slightly reduced */
+    .nav-container {
+        height: 70px;
+    }
+
     /* --- Hero --- */
-    #hero {
-        padding-top: 100px;
-        padding-bottom: 4rem;
-        gap: 3rem;
+    .hero-section {
+        padding-top: 0;
+    }
+
+    .hero-inner {
+        flex-direction: column-reverse;
+        text-align: center;
+        padding-top: 90px;
+        padding-bottom: 3rem;
+        gap: 2rem;
     }
 
     .hero-name {
@@ -1384,12 +1435,33 @@ footer {
     }
 
     .hero-greeting {
+        font-size: 0.95rem;
+    }
+
+    .hero-summary {
         font-size: 1rem;
+        margin: 0 auto 2rem;
+    }
+
+    .hero-cta {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .hero-stats {
+        justify-content: center;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .availability-badge {
+        margin-left: auto;
+        margin-right: auto;
     }
 
     .headshot-placeholder {
-        width: 220px;
-        height: 220px;
+        width: 200px;
+        height: 200px;
         border-radius: 50%;
         margin: 0 auto;
     }
@@ -1406,17 +1478,30 @@ footer {
         height: calc(100% + 16px);
     }
 
+    /* Hero background glows — reduce on mobile for performance */
+    .hero-glow-1 {
+        width: 250px;
+        height: 250px;
+        opacity: 0.2;
+    }
+
+    .hero-glow-2 {
+        width: 200px;
+        height: 200px;
+        opacity: 0.18;
+    }
+
     /* --- Sections padding --- */
-    section {
+    .section-padding {
         padding: 4rem 0;
     }
 
     .container {
-        padding: 0 1.2rem;
+        padding: 0 1.25rem;
     }
 
     /* --- Certifications --- */
-    .certs-grid {
+    .cert-grid {
         grid-template-columns: 1fr;
     }
 
@@ -1425,12 +1510,36 @@ footer {
         grid-template-columns: 1fr;
     }
 
+    /* Skill category: reduce padding */
+    .skill-category {
+        padding: 1.5rem;
+    }
+
+    /* --- TryHackMe stats card --- */
+    .thm-stats-card {
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 100%;
+        padding: 1.5rem;
+    }
+
+    .thm-stats {
+        gap: 1.5rem;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    /* --- Labs grid --- */
+    .labs-grid {
+        grid-template-columns: 1fr;
+    }
+
     /* --- Projects --- */
     .projects-grid {
         grid-template-columns: 1fr;
     }
 
-    /* --- Experience tabs --- */
+    /* --- Experience tabs: 2x2 grid --- */
     .tabs-header {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         margin-bottom: 1.5rem;
@@ -1438,7 +1547,8 @@ footer {
 
     .tab-btn {
         font-size: 0.8rem;
-        padding: 0.5rem 0.9rem;
+        padding: 0.65rem 0.5rem;
+        min-height: 44px; /* touch target */
     }
 
     /* --- Highlights grid: single column --- */
@@ -1452,9 +1562,24 @@ footer {
         gap: 0.25rem;
     }
 
+    .timeline-content {
+        padding: 1.5rem;
+    }
+
+    .timeline-item {
+        padding-left: 50px;
+    }
+
     /* --- Contact form --- */
     .contact-wrapper {
         padding: 1.5rem;
+        gap: 2rem;
+    }
+
+    /* Ensure email wraps on small screens */
+    .contact-link {
+        font-size: 0.95rem;
+        word-break: break-all;
     }
 
     /* --- Date badge adjustment --- */
@@ -1466,6 +1591,25 @@ footer {
     /* --- Reduce reveal offset on mobile --- */
     .reveal {
         transform: translateY(20px);
+    }
+
+    /* --- Back to top button: ensure it doesn't crowd content --- */
+    .back-to-top {
+        bottom: 1.5rem;
+        right: 1.5rem;
+        width: 44px;
+        height: 44px;
+    }
+
+    /* --- In-progress section: fix border on mobile --- */
+    .in-progress-section {
+        padding: 1.5rem;
+    }
+
+    /* --- Section title smaller on mobile --- */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 2rem;
     }
 }
 
@@ -1482,21 +1626,73 @@ footer {
     }
 
     .section-title {
-        font-size: 1.6rem;
+        font-size: 1.75rem;
     }
 
     .headshot-placeholder {
-        width: 180px;
-        height: 180px;
+        width: 170px;
+        height: 170px;
     }
 
     .social-links {
-        gap: 1rem;
+        gap: 0.75rem;
     }
 
     .social-links a {
-        width: 40px;
-        height: 40px;
+        width: 42px;
+        height: 42px;
         font-size: 1rem;
+    }
+
+    /* Hero CTA: stack buttons on very small screens */
+    .hero-cta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-cta .btn-primary,
+    .hero-cta .hero-btn-secondary {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+    }
+
+    /* Hero stats: wrap neatly */
+    .hero-stats {
+        gap: 1rem;
+    }
+
+    .hero-stat .stat-value {
+        font-size: 1.4rem;
+    }
+
+    /* Contact wrapper: tighter padding */
+    .contact-wrapper {
+        padding: 1.25rem;
+    }
+
+    .contact-info h3 {
+        font-size: 1.5rem;
+    }
+
+    /* Timeline: even tighter */
+    .timeline-item {
+        padding-left: 45px;
+    }
+
+    /* Tab buttons: even smaller text */
+    .tab-btn {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.4rem;
+    }
+
+    /* Nav: slightly smaller logo */
+    .logo {
+        font-size: 1.5rem;
+    }
+
+    /* Cert card: reduce padding */
+    .cert-card {
+        padding: 1.25rem;
     }
 }

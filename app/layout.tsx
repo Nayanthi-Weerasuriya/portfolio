@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -9,6 +9,13 @@ import BackToTop from "@/components/BackToTop";
 
 const siteUrl =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://nayanthi-portfolio.vercel.app";
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 5,
+  themeColor: "#0B1120",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
