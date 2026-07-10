@@ -132,6 +132,8 @@ export default function Hero() {
               <SafeImage
                 src="/img/profile.png"
                 alt="Nayanthi Weerasuriya"
+                loading="eager"
+                fetchPriority="high"
                 style={{
                   width: "100%",
                   height: "100%",

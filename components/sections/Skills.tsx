@@ -3,7 +3,7 @@ import { labs, skillCategories } from "@/lib/portfolio-data";
 export default function Skills() {
   return (
     <section id="skills" className="container section-padding">
-      <h2 className="section-title">Technical &amp; Security Skills</h2>
+      <h2 className="section-title">Skills</h2>
       <div className="skills-grid">
         {skillCategories.map((category) => (
           <div key={category.title} className="skill-category">
