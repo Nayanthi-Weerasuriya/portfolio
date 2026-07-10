@@ -942,54 +942,294 @@ footer {
     width: 100%;
 }
 
-/* --- Responsive Design --- */
+/* ==========================================
+   HAMBURGER MENU
+   ========================================== */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+}
+
+.hamburger span {
+    display: block;
+    width: 100%;
+    height: 2px;
+    background-color: var(--text-main);
+    border-radius: 2px;
+    transition: all 0.35s ease;
+    transform-origin: center;
+}
+
+/* Animate to X when open */
+.hamburger.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+}
+.hamburger.open span:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+.hamburger.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+}
+
+/* ==========================================
+   RESPONSIVE — TABLET (≤992px)
+   ========================================== */
 @media (max-width: 992px) {
+
+    /* Hero: stack vertically */
     #hero {
-        flex-direction: column;
+        flex-direction: column-reverse;
         text-align: center;
         padding-top: 120px;
+        gap: 2rem;
     }
-    
+
     .hero-summary {
         margin: 0 auto 2.5rem;
     }
-    
+
     .social-links {
         justify-content: center;
     }
-    
-    .section-title::after {
-        left: 50%;
-        transform: translateX(-50%);
-    }
-    
+
+    /* Section titles center */
     .section-title {
         display: block;
         text-align: center;
     }
-    
+
+    .section-title::after {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
     .about-content {
         margin: 0 auto;
         text-align: center;
     }
+
+    /* Certs grid: 2 columns on tablet */
+    .certs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Skills grid: 2 columns */
+    .skills-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Highlights grid: 2 columns */
+    .highlights-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
+/* ==========================================
+   RESPONSIVE — MOBILE (≤768px)
+   ========================================== */
 @media (max-width: 768px) {
-    .hero-name {
-        font-size: 3rem;
+
+    /* --- Navigation --- */
+    .hamburger {
+        display: flex;
     }
-    
-    .hero-tagline {
-        font-size: 1.2rem;
-    }
-    
-    .headshot-placeholder {
-        width: 100%;
-        max-width: 300px;
-        height: 350px;
-    }
-    
+
     .nav-links {
-        display: none; /* Mobile menu to be implemented later */
+        /* Hidden off-screen by default */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        max-width: 300px;
+        height: 100vh;
+        background-color: rgba(15, 23, 42, 0.98);
+        backdrop-filter: blur(12px);
+        border-left: 1px solid var(--border-color);
+        padding: 100px 2rem 2rem;
+        transition: right 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        z-index: 1000;
+        box-shadow: -10px 0 40px rgba(0,0,0,0.5);
+    }
+
+    .nav-links.open {
+        right: 0;
+    }
+
+    .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+    .nav-links li:last-child {
+        border-bottom: none;
+    }
+
+    .nav-links a {
+        display: block;
+        padding: 1.1rem 0;
+        font-size: 1.1rem;
+        color: var(--text-main);
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    .nav-links a::after {
+        display: none; /* hide underline animation on mobile */
+    }
+
+    /* Overlay backdrop */
+    .nav-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        z-index: 999;
+        transition: opacity 0.3s ease;
+    }
+
+    .nav-overlay.open {
+        display: block;
+    }
+
+    /* --- Hero --- */
+    #hero {
+        padding-top: 100px;
+        padding-bottom: 4rem;
+        gap: 3rem;
+    }
+
+    .hero-name {
+        font-size: 2.4rem;
+    }
+
+    .hero-tagline {
+        font-size: 1.1rem;
+    }
+
+    .hero-greeting {
+        font-size: 1rem;
+    }
+
+    .headshot-placeholder {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+
+    /* --- Sections padding --- */
+    section {
+        padding: 4rem 0;
+    }
+
+    .container {
+        padding: 0 1.2rem;
+    }
+
+    /* --- Certifications --- */
+    .certs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Skills --- */
+    .skills-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Projects --- */
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Experience tabs: scrollable tab bar --- */
+    .tabs {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+        flex-wrap: nowrap;
+    }
+
+    .tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        white-space: nowrap;
+        flex-shrink: 0;
+        font-size: 0.8rem;
+        padding: 0.5rem 0.9rem;
+    }
+
+    /* --- Highlights grid: single column --- */
+    .highlights-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* --- Timeline --- */
+    .timeline-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    /* --- Contact form --- */
+    .contact-wrapper {
+        padding: 1.5rem;
+    }
+
+    /* --- Date badge adjustment --- */
+    .date-badge {
+        font-size: 0.7rem;
+        padding: 0.25rem 0.55rem;
+    }
+
+    /* --- Reduce reveal offset on mobile --- */
+    .reveal {
+        transform: translateY(20px);
+    }
+}
+
+/* ==========================================
+   RESPONSIVE — SMALL MOBILE (≤480px)
+   ========================================== */
+@media (max-width: 480px) {
+    .hero-name {
+        font-size: 2rem;
+    }
+
+    .hero-tagline {
+        font-size: 1rem;
+    }
+
+    .section-title {
+        font-size: 1.6rem;
+    }
+
+    .headshot-placeholder {
+        width: 180px;
+        height: 180px;
+    }
+
+    .social-links {
+        gap: 1rem;
+    }
+
+    .social-links a {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
     }
 }
