@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useState } from "react";
 import SafeImage from "@/components/SafeImage";
-import AnimatedCounter from "@/components/AnimatedCounter";
 
 const roles = [
   "Cybersecurity Analyst",
@@ -53,11 +52,6 @@ export default function Hero() {
 
       <div className="container hero-inner">
         <div className="hero-content">
-          <div className="availability-badge">
-            <span className="pulse-dot" />
-            Open to SOC &amp; CTI Internships — 2026
-          </div>
-
           <p className="hero-greeting">Hello, I&apos;m</p>
           <h1 className="hero-name">Nayanthi Weerasuriya</h1>
 
@@ -80,9 +74,9 @@ export default function Hero() {
             <button
               type="button"
               className="btn-primary"
-              onClick={() => scrollTo("#projects")}
+              onClick={() => scrollTo("#skills")}
             >
-              View My Work <i className="fas fa-arrow-right" />
+              View My Skills <i className="fas fa-arrow-right" />
             </button>
             <button
               type="button"
@@ -99,21 +93,6 @@ export default function Hero() {
             >
               <i className="fab fa-linkedin" /> LinkedIn
             </a>
-          </div>
-
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <AnimatedCounter end={5} suffix="+" />
-              <span className="stat-label">Certifications</span>
-            </div>
-            <div className="hero-stat">
-              <AnimatedCounter end={5} />
-              <span className="stat-label">Projects</span>
-            </div>
-            <div className="hero-stat">
-              <span className="stat-value">Top 75%</span>
-              <span className="stat-label">TryHackMe Rank</span>
-            </div>
           </div>
 
           <div className="social-links">

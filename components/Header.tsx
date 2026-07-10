@@ -112,13 +112,6 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <a
-            href="#contact"
-            className="nav-cta"
-            onClick={(e) => handleNavClick(e, "#contact")}
-          >
-            Hire Me
-          </a>
           <button
             className={`hamburger${menuOpen ? " open" : ""}`}
             id="hamburger"
