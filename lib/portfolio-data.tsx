@@ -104,6 +104,17 @@ export const skillCategories: SkillCategory[] = [
       </>,
     ],
   },
+  {
+    icon: "fas fa-users",
+    title: "Soft Skills",
+    items: [
+      "Strong verbal and written communication skills",
+      "Good interpersonal skills",
+      "Hands on experience in Microsoft package",
+      "Attention to detail",
+      "Teamwork and collaboration",
+    ],
+  },
 ];
 
 export type Lab = {
