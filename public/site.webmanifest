@@ -1,0 +1,22 @@
+{
+  "name": "Nayanthi Weerasuriya | Cybersecurity Analyst",
+  "short_name": "Nayanthi",
+  "description": "Portfolio of Nayanthi Weerasuriya — aspiring Cybersecurity Analyst open to SOC and CTI internships.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B1120",
+  "theme_color": "#0B1120",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/img/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
