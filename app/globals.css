@@ -163,6 +163,12 @@ header {
     color: var(--accent-primary);
 }
 
+/* The mobile menu is enabled only by its responsive styles. Hide it on desktop
+   so its links cannot render as a second, unstyled navigation list. */
+.mobile-nav {
+    display: none;
+}
+
 /* --- Hero Section --- */
 .hero-section {
     position: relative;
@@ -447,10 +453,9 @@ header {
 
 /* --- Footer --- */
 footer {
-    background-color: var(--bg-secondary);
+    background-color: var(--bg-main);
     padding: 2rem 0;
     text-align: center;
-    border-top: 1px solid var(--border-color);
 }
 
 .footer-content {
@@ -458,10 +463,42 @@ footer {
     font-size: 0.9rem;
 }
 
-.footer-content i {
-    color: var(--accent-primary);
-    margin: 0 0.5rem;
+/* --- Back to top --- */
+.back-to-top {
+    position: fixed;
+    right: 2rem;
+    bottom: 2rem;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--accent-primary);
+    border-radius: 50%;
+    background-color: var(--accent-primary);
+    color: var(--bg-main);
+    box-shadow: 0 8px 24px var(--accent-glow);
+    cursor: pointer;
+    font-size: 1.25rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(16px);
+    transition: var(--transition);
+    z-index: 1100;
 }
+
+.back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    background-color: var(--bg-card);
+    color: var(--accent-primary);
+    transform: translateY(-4px);
+}
+
 
 /* --- Certifications --- */
 .cert-grid {
