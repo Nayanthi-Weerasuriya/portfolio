@@ -78,15 +78,6 @@ export default function Header() {
     else openMenu();
   };
 
-  const handleNavClick = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    href: string
-  ) => {
-    e.preventDefault();
-    document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
-    closeMenu();
-  };
-
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     closeMenu();
@@ -94,7 +85,10 @@ export default function Header() {
 
   return (
     <>
-      <header id="header" className={scrolled ? "header-scrolled" : ""}>
+      <header
+        id="header"
+        className={`${scrolled ? "header-scrolled" : ""}${menuOpen ? " menu-open" : ""}`}
+      >
         <nav className="container nav-container">
           <button type="button" className="logo logo-btn" onClick={scrollToTop}>
             NW
@@ -105,7 +99,7 @@ export default function Header() {
                 <a
                   href={link.href}
                   className={activeSection === link.id ? "active" : ""}
-                  onClick={(e) => handleNavClick(e, link.href)}
+                  onClick={closeMenu}
                 >
                   {link.label}
                 </a>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SafeImage from "@/components/SafeImage";
 import {
   achievementHighlights,
@@ -31,10 +31,17 @@ function HighlightCarousel({ items }: { items: HighlightCard[] }) {
     setActiveIndex((index) => (index + 1) % items.length);
   };
 
+  useEffect(() => {
+    if (items.length < 2) return;
+
+    const intervalId = window.setInterval(showNext, 2000);
+    return () => window.clearInterval(intervalId);
+  }, [items.length]);
+
   return (
     <div className="experience-carousel" aria-roledescription="carousel">
       <div className="experience-card-wrap">
-        <div className="highlight-card experience-card">
+        <div key={currentItem.title} className="highlight-card experience-card">
           {currentItem.date && <div className="date-badge">{currentItem.date}</div>}
           <div className="highlight-image">
             <SafeImage
