@@ -19,16 +19,27 @@ const tabs = [
 
 type TabId = (typeof tabs)[number]["id"];
 
-function HighlightGrid({ items }: { items: HighlightCard[] }) {
+function HighlightCarousel({ items }: { items: HighlightCard[] }) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const currentItem = items[activeIndex];
+
+  const showPrevious = () => {
+    setActiveIndex((index) => (index - 1 + items.length) % items.length);
+  };
+
+  const showNext = () => {
+    setActiveIndex((index) => (index + 1) % items.length);
+  };
+
   return (
-    <div className="highlights-grid">
-      {items.map((item) => (
-        <div key={item.title} className="highlight-card">
-          {item.date && <div className="date-badge">{item.date}</div>}
+    <div className="experience-carousel" aria-roledescription="carousel">
+      <div className="experience-card-wrap">
+        <div className="highlight-card experience-card">
+          {currentItem.date && <div className="date-badge">{currentItem.date}</div>}
           <div className="highlight-image">
             <SafeImage
-              src={item.image}
-              alt={item.alt}
+              src={currentItem.image}
+              alt={currentItem.alt}
               style={{
                 width: "100%",
                 height: "100%",
@@ -39,17 +50,40 @@ function HighlightGrid({ items }: { items: HighlightCard[] }) {
           </div>
           <div className="highlight-content">
             <div className="highlight-tags">
-              {item.tags.map((tag) => (
+              {currentItem.tags.map((tag) => (
                 <span key={tag} className="tag">
                   {tag}
                 </span>
               ))}
             </div>
-            <h3>{item.title}</h3>
-            <p>{item.description}</p>
+            <h3>{currentItem.title}</h3>
+            <p>{currentItem.description}</p>
           </div>
         </div>
-      ))}
+      </div>
+
+      {items.length > 1 && (
+        <div className="carousel-controls">
+          <button type="button" onClick={showPrevious} aria-label="Show previous item">
+            <i className="fas fa-arrow-left" aria-hidden="true" />
+          </button>
+          <div className="carousel-dots" aria-label="Select an item">
+            {items.map((item, index) => (
+              <button
+                key={item.title}
+                type="button"
+                className={index === activeIndex ? "active" : ""}
+                aria-label={`Show item ${index + 1} of ${items.length}`}
+                aria-pressed={index === activeIndex}
+                onClick={() => setActiveIndex(index)}
+              />
+            ))}
+          </div>
+          <button type="button" onClick={showNext} aria-label="Show next item">
+            <i className="fas fa-arrow-right" aria-hidden="true" />
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -62,13 +96,16 @@ export default function Experience() {
       <h2 className="section-title">My Journey &amp; Experience</h2>
 
       <div className="tabs-container">
-        <div className="tabs-header">
+        <div className="tabs-header" role="tablist" aria-label="Experience categories">
           {tabs.map((tab) => (
             <button
               key={tab.id}
               type="button"
               className={`tab-btn${activeTab === tab.id ? " active" : ""}`}
               onClick={() => setActiveTab(tab.id)}
+              role="tab"
+              aria-selected={activeTab === tab.id}
+              aria-controls={`${tab.id}-panel`}
             >
               {tab.label}
             </button>
@@ -76,7 +113,11 @@ export default function Experience() {
         </div>
 
         <div className="tabs-content">
-          <div className={`tab-pane${activeTab === "work" ? " active" : ""}`} id="work">
+          <div
+            className={`tab-pane${activeTab === "work" ? " active" : ""}`}
+            id="work-panel"
+            role="tabpanel"
+          >
             <div className="timeline">
               <div className="timeline-item">
                 <div className="timeline-dot" />
@@ -98,23 +139,26 @@ export default function Experience() {
 
           <div
             className={`tab-pane${activeTab === "societies" ? " active" : ""}`}
-            id="societies"
+            id="societies-panel"
+            role="tabpanel"
           >
-            <HighlightGrid items={societyHighlights} />
+            <HighlightCarousel items={societyHighlights} />
           </div>
 
           <div
             className={`tab-pane${activeTab === "networking" ? " active" : ""}`}
-            id="networking"
+            id="networking-panel"
+            role="tabpanel"
           >
-            <HighlightGrid items={networkingHighlights} />
+            <HighlightCarousel items={networkingHighlights} />
           </div>
 
           <div
             className={`tab-pane${activeTab === "achievements" ? " active" : ""}`}
-            id="achievements"
+            id="achievements-panel"
+            role="tabpanel"
           >
-            <HighlightGrid items={achievementHighlights} />
+            <HighlightCarousel items={achievementHighlights} />
           </div>
         </div>
       </div>
